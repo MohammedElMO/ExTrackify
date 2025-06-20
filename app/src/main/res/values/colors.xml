@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="md_theme_light_primary">#bbd8ac</color>
+    <color name="md_theme_light_onPrimary">#2B2F45</color>
+
+    <color name="md_theme_light_secondary">#8B998E</color>
+    <color name="md_theme_light_onSecondary">#72687D</color>
+
+    <color name="md_theme_light_background">#F5F5F7</color>
+    <color name="md_theme_light_onBackground">#2B2F45</color>
+
+    <color name="md_theme_light_surface">#C9D3CE</color>
+    <color name="md_theme_light_onSurface">#2B2F45</color>
+
+    <color name="md_theme_light_surfaceVariant">#C5B0BD</color>
+    <color name="md_theme_light_tertiary">#F5ECD4</color>
+
+    <color name="md_theme_light_outline">#7D9A6C</color>
+    <color name="md_theme_light_error">#F4CFCB</color>
+
+</resources>
