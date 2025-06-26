@@ -1,87 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".SignUpScreen">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="authView"
+            type="com.example.extrackify.view_model.AuthViewModel" />
+
+    </data>
 
     <LinearLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_margin="20dp">
-        <EditText
-            android:id="@+id/username"
-            android:inputType="text"
-            android:hint="Username"
-            android:labelFor="@+id/UserName"
-            android:autofillHints="name"
-            style="@style/defaultInput"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
+        tools:context=".SignUpScreen">
 
-        <EditText
-            android:id="@+id/email"
-            android:inputType="textEmailAddress"
-            android:hint="Email"
-            android:labelFor="@+id/UserName"
-            android:autofillHints="name"
-            style="@style/defaultInput"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
 
-            />
-        <EditText
-            android:id="@+id/password"
-            android:inputType="textPassword"
-            android:hint="Password"
-            android:labelFor="@+id/UserName"
-            android:autofillHints="name"
-            style="@style/defaultInput"
+            <EditText
+                android:id="@+id/username"
+                style="@style/defaultInput"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:autofillHints="name"
+                android:hint="Username"
+                android:inputType="text"
+                android:labelFor="@+id/UserName"
+                android:text="@={authView.username}" />
+
+            <EditText
+                android:id="@+id/email"
+                style="@style/defaultInput"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:autofillHints="name"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:labelFor="@+id/email"
+                android:text="@={authView.email}"
+
+                />
+
+            <EditText
+                android:id="@+id/password"
+                style="@style/defaultInput"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:autofillHints="name"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:labelFor="@+id/password"
+                android:text="@={authView.password}"
+
+                />
+
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:orientation="vertical">
 
-            />
+            <Button
+                android:id="@+id/signup_btn"
+                style="@style/defaultBtn"
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/btn_states"
+                android:enabled="@{!authView.isLoading()}"
+                android:soundEffectsEnabled="true"
+                android:text="Sign Up"
+                android:textFontWeight="600">
+
+            </Button>
+
+            <Button
+                android:id="@+id/google_signup_btn"
+                style="@style/defaultBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/auth_btn_disabled"
+                android:drawableStart="@drawable/google"
+                android:drawablePadding="-8dp"
+                android:soundEffectsEnabled="true"
+                android:text="Sign Up With Google"
+                android:textFontWeight="600"
+                android:enabled="@{!authView.isLoading()}"
+                />
+        </LinearLayout>
 
 
     </LinearLayout>
+</layout>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp">
-
-        <Button
-            android:id="@+id/signup_btn"
-            style="@style/defaultBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/rouneded_corners_22"
-            android:text="Sign Up"
-            android:textFontWeight="600"
-            android:layout_marginBottom="10dp"
-            />
-
-        <Button
-            style="@style/defaultBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rouneded_corners_22"
-            android:text="Sign Up With Google"
-            android:id="@+id/google_signup_btn"
-            android:drawableStart="@drawable/google"
-            android:textFontWeight="600"
-            android:drawablePadding="-8dp"
-
-            />
-    </LinearLayout>
-
-</LinearLayout>

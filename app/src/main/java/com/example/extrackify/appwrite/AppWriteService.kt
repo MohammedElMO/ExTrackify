@@ -21,6 +21,7 @@ object AppWriteService {
         account = Account(client)
     }
 
+
    suspend fun login(email:String,password:String): Session {
        return account.createEmailPasswordSession(email,password)
     }

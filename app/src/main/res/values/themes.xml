@@ -26,11 +26,13 @@
 
     <style name="defaultBtn">
         <item name="android:textColor">@color/md_theme_light_onPrimary</item>
-        <item name="android:background">@color/md_theme_light_primary</item>
         <item name="fontFamily">@font/opensans_regular</item>
         <item name="android:textSize">16sp</item>
         <item name="android:padding">10dp</item>
+        <item name="android:background">@drawable/btn_states</item>
+        <item name="cursorErrorColor">@color/md_theme_light_error</item>
     </style>
+
     <style name="defaultInput">
         <item name="android:textColor">@color/md_theme_light_onPrimary</item>
         <item name="android:background">@color/md_theme_light_background</item>

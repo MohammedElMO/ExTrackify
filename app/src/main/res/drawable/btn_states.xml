@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:color="@color/md_theme_light_error">
+    <item android:state_enabled="false" android:drawable="@drawable/auth_btn_disabled" />
+    <item android:drawable="@drawable/auth_btn_enabled" />
+</ripple>
