@@ -1,7 +1,6 @@
 package com.example.extrackify.models
 
 import android.content.Context
-
 import com.example.extrackify.appwrite.AppWriteService
 import io.appwrite.models.Session
 import io.appwrite.models.User
@@ -21,7 +20,19 @@ class UserRepository(ctx: Context) {
         return AppWriteService.login(email, password)
     }
 
-    suspend fun getSession(): User<Map<String, Any>> {
-        return AppWriteService.getLoginUser()
+    suspend fun getSession(): Session {
+        return AppWriteService.getSession()
     }
+
+
+
+    suspend fun googleSignUp(activity: androidx.activity.ComponentActivity) {
+        return AppWriteService.googleSignUp(activity)
+    }
+
+    suspend fun logout(): Any {
+        return AppWriteService.logout()
+    }
+
+
 }

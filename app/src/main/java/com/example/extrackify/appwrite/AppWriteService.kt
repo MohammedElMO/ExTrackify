@@ -45,22 +45,25 @@ object AppWriteService {
         return account.deleteSession("current")
     }
 
-    suspend fun getLoginUser(): User<Map<String, Any>> {
+    suspend fun getSession(): Session {
 
         return withContext(Dispatchers.IO) {
 
-            account.get()
+            account.getSession("current")
         }
 
 
     }
 
 
-    suspend fun googleLogin(activity: ComponentActivity){
-      return account.createOAuth2Session(
+    suspend fun googleSignUp(activity: ComponentActivity) {
+
+        return account.createOAuth2Session(
             provider = OAuthProvider.GOOGLE,
-            activity = activity
+            activity = activity,
+//            success = "appwrite-callback-68545c4f0035d81094e4://success"
         )
+
 
     }
 

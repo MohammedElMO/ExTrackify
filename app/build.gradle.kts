@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-
     id("kotlin-kapt")
 }
 
@@ -43,9 +42,6 @@ android {
 }
 
 dependencies {
-    //  hilts
-//    implementation("com.google.dagger:hilt-android:2.56.2")
-//    kapt("com.google.dagger:hilt-android-compiler:2.56.2")
 
     implementation("androidx.datastore:datastore-preferences:1.1.7")
     implementation("androidx.core:core-splashscreen:1.0.1")

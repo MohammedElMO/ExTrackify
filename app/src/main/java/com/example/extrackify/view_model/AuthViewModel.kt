@@ -1,6 +1,7 @@
 package com.example.extrackify.view_model
 
 import android.util.Log
+import androidx.activity.ComponentActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -101,14 +102,16 @@ class AuthViewModel(private val userRepo: UserRepository) : ViewModel() {
                     password = password.value.toString()
                 )
                 _toastMessage.value = "Success"
+                _isAuthentificated.value = true
+
             } catch (e: AppwriteException) {
                 Log.d("error appwrite", e.message.toString())
                 _errorMessage.value = e.message.toString()
                 _isLoading.value = false
+                _isAuthentificated.value = false
 
             } finally {
                 _isLoading.value = false
-                _isAuthentificated.value = true
             }
 
         }
@@ -129,20 +132,66 @@ class AuthViewModel(private val userRepo: UserRepository) : ViewModel() {
                     password = password.value.toString()
                 )
                 _toastMessage.value = "Success"
+                _isAuthentificated.value = true
+
             } catch (e: AppwriteException) {
                 Log.d("error appwrite", e.message.toString())
                 _errorMessage.value = e.message.toString()
                 _isLoading.value = false
+                _isAuthentificated.value = false
+
 
             } finally {
                 _isLoading.value = false
-                _isAuthentificated.value = true
 
             }
         }
 
 
     }
+
+
+    fun googleSignUp(activity: ComponentActivity) {
+        viewModelScope.launch {
+            _isLoading.value = true
+
+            try {
+                userRepo.googleSignUp(
+                    activity = activity
+                )
+                _toastMessage.value = "Success"
+                _isAuthentificated.value = true
+            } catch (e: AppwriteException) {
+                Log.d("error appwrite", e.message.toString())
+                _errorMessage.value = e.message.toString()
+                _isLoading.value = false
+                _isAuthentificated.value = false
+
+            } finally {
+                _isLoading.value = false
+
+            }
+
+
+        }
+
+    }
+
+
+    fun logout() {
+
+        viewModelScope.launch {
+            try {
+                userRepo.logout()
+                _isAuthentificated.value = false
+
+            } catch (e: AppwriteException) {
+                Log.d("appwrite:auth", "${e.message}")
+//                _isAuthentificated.value = true
+            }
+        }
+    }
+
 
     override fun onCleared() {
         super.onCleared()

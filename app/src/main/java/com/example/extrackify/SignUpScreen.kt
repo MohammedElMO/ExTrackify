@@ -69,20 +69,22 @@ class SignUpScreen : AppCompatActivity() {
                 .onSignUp()
         }
         binding.googleSignupBtn.setOnClickListener {
-
+            authView.googleSignUp(this@SignUpScreen)
         }
 
 
+    }
+
+    override fun onResume() {
+        super.onResume()
         authView.isAuthentificated.observe(this) { authenticated ->
             if (authenticated) {
                 NavigationUtils.navigateToActivity(this, MainActivity::class.java)
-
                 finish()
 
             }
 
         }
-
     }
 
 

@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.extrackify.models.UserRepository
 import com.example.extrackify.utils.SessionManager
 import io.appwrite.exceptions.AppwriteException
-import io.appwrite.models.User
+import io.appwrite.models.Session
 import kotlinx.coroutines.launch
 
 class SplashScreenViewModel(
@@ -22,9 +22,8 @@ class SplashScreenViewModel(
         get() = _isLoadingSession;
 
 
-    private val _session = MutableLiveData<User<Map<String, Any>>>()
-
-    val session: LiveData<User<Map<String, Any>>>
+    private val _session = MutableLiveData<Session?>(null)
+    val session: LiveData<Session?>
         get() = _session;
 
     init {
@@ -38,18 +37,20 @@ class SplashScreenViewModel(
                 _session.value = userRepository.getSession()
 
 
-                sessionManager.saveUser(
-                    id = _session.value?.id,
-                    email = _session.value?.email,
-                    name = _session.value?.name
-                )
+//                sessionManager.saveUser(
+//                    id = _session.value?.id,
+//                    email = _session.value?.email,
+//                    name = _session.value?.name
+//                )
+
 
                 Log.d("appwrite", "$session")
 
-                _isLoadingSession.value = false
-
             } catch (e: AppwriteException) {
                 Log.d("appwrite", "${e.message}")
+                _isLoadingSession.value = false
+
+            } finally {
                 _isLoadingSession.value = false
 
             }

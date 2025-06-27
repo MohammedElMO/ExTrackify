@@ -69,11 +69,21 @@ class LoginScreen : AppCompatActivity() {
         }
 
 
+        binding.googleLoginBtn.setOnClickListener {
+            authView
+                .googleSignUp(this@LoginScreen)
+        }
+
         binding.loginBtn.setOnClickListener {
             authView
                 .onLogin()
         }
 
+
+    }
+
+    override fun onResume() {
+        super.onResume()
 
         authView.isAuthentificated.observe(this) { authenticated ->
             if (authenticated) {
@@ -86,6 +96,7 @@ class LoginScreen : AppCompatActivity() {
 
         }
 
-
     }
+
+
 }
