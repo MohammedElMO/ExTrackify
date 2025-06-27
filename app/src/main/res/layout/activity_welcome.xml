@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,26 +10,24 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="450dp"
-        />
+        android:layout_height="450dp" />
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/opensans_bold"
-        android:text="Track your expenses"
         android:layout_marginBottom="10dp"
-        android:textSize="30sp"
+        android:fontFamily="@font/opensans_bold"
         android:gravity="center"
-        />
+        android:text="Track your expenses"
+        android:textSize="30sp" />
 
     <TextView
         android:layout_width="400dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:fontFamily="@font/opensans_regular"
         android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/opensans_regular"
+        android:gravity="center"
         android:text="Stay on top of your finances with our easy-to-use expense tracker." />
 
     <LinearLayout
@@ -37,32 +35,29 @@
         android:layout_height="match_parent"
         android:layout_marginHorizontal="20dp"
         android:layout_marginVertical="10dp"
-        android:orientation="vertical"
         android:gravity="center"
-        >
+        android:orientation="vertical">
 
         <Button
+            android:id="@+id/toSignUp"
             style="@style/defaultBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sign up"
-            android:id="@+id/signup_btn"
-            android:textFontWeight="900"
             android:layout_marginBottom="10dp"
-            app:fontFamily="@font/opensans_semibold"
             android:background="@drawable/ripple_auth"
-            />
+            android:text="Sign up"
+            android:textFontWeight="900"
+            app:fontFamily="@font/opensans_semibold" />
 
         <Button
-            android:id="@+id/login_btn"
+            android:id="@+id/toLogin"
             style="@style/defaultBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Log in"
-            app:fontFamily="@font/opensans_semibold"
-            android:textFontWeight="800"
             android:background="@drawable/ripple_auth"
-            />
+            android:text="Log in"
+            android:textFontWeight="800"
+            app:fontFamily="@font/opensans_semibold" />
     </LinearLayout>
 
 

@@ -2,6 +2,7 @@
 <resources>
     <color name="md_theme_light_primary">#bbd8ac</color>
     <color name="md_theme_light_onPrimary">#2B2F45</color>
+    <color name="md_theme_light_onPrimary_400">#2B2F4533</color>
 
     <color name="md_theme_light_secondary">#8B998E</color>
     <color name="md_theme_light_onSecondary">#72687D</color>

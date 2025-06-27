@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.extrackify.models.UserRepository
 import io.appwrite.exceptions.AppwriteException
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 sealed class ValidationResult {
@@ -15,26 +14,31 @@ sealed class ValidationResult {
     data class Error(val message: String) : ValidationResult()
 }
 
-class Event<out T>(private val content: T) {
-    private var hasBeenHandled = false
-    fun getContentIfNotHandled(): T? = if (hasBeenHandled) null else {
-        hasBeenHandled = true
-        content
-    }
-}
+//class Event<out T>(private val content: T) {
+//    private var hasBeenHandled = false
+//    fun getContentIfNotHandled(): T? = if (hasBeenHandled) null else {
+//        hasBeenHandled = true
+//        content
+//    }
 
 class AuthViewModel(private val userRepo: UserRepository) : ViewModel() {
     private val MIN_PASSWORD_LENGTH = 8
 
-    val username = MutableLiveData("")
-    val email = MutableLiveData("")
-    val password = MutableLiveData("")
+    val username = MutableLiveData("adadgag")
+    val email = MutableLiveData("mohammed@gmail.com")
+    val password = MutableLiveData("mohammed123")
     private val _isLoading = MutableLiveData(false)
     private val _errorMessage = MutableLiveData("")
     private val _toastMessage = MutableLiveData<String>(null)
+    private val _isAuthentificated = MutableLiveData(false)
+
 
     val isLoading: LiveData<Boolean>
         get() = _isLoading
+
+    val isAuthentificated: LiveData<Boolean>
+        get() = _isAuthentificated
+
 
     val errorMessage: LiveData<String>
         get() = _errorMessage
@@ -50,19 +54,19 @@ class AuthViewModel(private val userRepo: UserRepository) : ViewModel() {
         passwordText.trim().length >= MIN_PASSWORD_LENGTH
 
     private fun checkEmptyInputs(
-        username: String,
-        emailText: String,
-        passwordText: String
-    ): Boolean =
-        (emailText.trim().isEmpty() || passwordText.trim().isEmpty() || username.trim().isEmpty())
+        vararg values: String
+
+    ): Boolean {
+        return values.all { it.trim().isEmpty() }
+    }
 
     private fun validateFields(): Boolean {
         val isValidPass = checkPasswordLength(password.value.toString())
         val isValidEmail = checkIfValidEmail(email.value.toString())
         val areEmpty = checkEmptyInputs(
-            emailText = email.value.toString(),
-            passwordText = password.value.toString(),
-            username = username.value.toString()
+            email.value.toString(),
+            password.value.toString(),
+            username.value.toString()
         )
 
         if (areEmpty) {
@@ -84,7 +88,6 @@ class AuthViewModel(private val userRepo: UserRepository) : ViewModel() {
     }
 
     fun onSignUp() {
-        Log.d("values", "${username.value} ${email.value} ${password.value}")
 
         if (!validateFields()) return
         _isLoading.value = true
@@ -92,22 +95,53 @@ class AuthViewModel(private val userRepo: UserRepository) : ViewModel() {
 
         viewModelScope.launch {
             try {
-                delay(5000)
-
-//                userRepo.createUser(
-//                    username = username.value.toString(),
-//                    email = email.value.toString(),
-//                    password = password.value.toString()
-//                )
+                userRepo.createUser(
+                    username = username.value.toString(),
+                    email = email.value.toString(),
+                    password = password.value.toString()
+                )
                 _toastMessage.value = "Success"
             } catch (e: AppwriteException) {
                 Log.d("error appwrite", e.message.toString())
                 _errorMessage.value = e.message.toString()
+                _isLoading.value = false
+
             } finally {
                 _isLoading.value = false
+                _isAuthentificated.value = true
             }
 
         }
+    }
+
+
+    fun onLogin() {
+        if (!checkEmptyInputs()) {
+            _toastMessage.value = "all Fields must be filled"
+            return
+        }
+        _isLoading.value = true
+
+        viewModelScope.launch {
+            try {
+                userRepo.loginUser(
+                    email = email.value.toString(),
+                    password = password.value.toString()
+                )
+                _toastMessage.value = "Success"
+            } catch (e: AppwriteException) {
+                Log.d("error appwrite", e.message.toString())
+                _errorMessage.value = e.message.toString()
+                _isLoading.value = false
+
+            } finally {
+                _isLoading.value = false
+                _isAuthentificated.value = true
+
+            }
+        }
+
+
     }
 
     override fun onCleared() {
@@ -117,3 +151,5 @@ class AuthViewModel(private val userRepo: UserRepository) : ViewModel() {
     }
 
 }
+
+

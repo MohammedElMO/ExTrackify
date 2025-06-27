@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="authView"
             type="com.example.extrackify.view_model.AuthViewModel" />
@@ -47,7 +46,6 @@
                 android:text="@={authView.email}"
 
                 />
-
             <EditText
                 android:id="@+id/password"
                 style="@style/defaultInput"
@@ -61,8 +59,6 @@
                 android:text="@={authView.password}"
 
                 />
-
-
         </LinearLayout>
 
         <LinearLayout
@@ -75,7 +71,6 @@
                 android:id="@+id/signup_btn"
                 style="@style/defaultBtn"
                 android:layout_width="match_parent"
-
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
@@ -95,10 +90,11 @@
                 android:background="@drawable/auth_btn_disabled"
                 android:drawableStart="@drawable/google"
                 android:drawablePadding="-8dp"
+                android:enabled="@{!authView.isLoading()}"
                 android:soundEffectsEnabled="true"
                 android:text="Sign Up With Google"
                 android:textFontWeight="600"
-                android:enabled="@{!authView.isLoading()}"
+
                 />
         </LinearLayout>
 

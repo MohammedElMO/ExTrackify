@@ -1,10 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".LoginScreen">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+
+        <variable
+            name="authView"
+            type="com.example.extrackify.view_model.AuthViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".LoginScreen">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/email"
+                style="@style/defaultInput"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:autofillHints="name"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:labelFor="@+id/email"
+                android:text="@={authView.email}"
+
+                />
+
+            <EditText
+                android:id="@+id/password"
+                style="@style/defaultInput"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:autofillHints="name"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:labelFor="@+id/password"
+                android:text="@={authView.password}"
+
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/login_btn"
+                style="@style/defaultBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/btn_states"
+                android:enabled="@{!authView.isLoading()}"
+                android:soundEffectsEnabled="true"
+                android:text="Login"
+                android:textFontWeight="600">
+
+            </Button>
+
+            <Button
+                android:id="@+id/google_signup_btn"
+                style="@style/defaultBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/auth_btn_disabled"
+                android:drawableStart="@drawable/google"
+                android:drawablePadding="-8dp"
+                android:enabled="@{!authView.isLoading()}"
+                android:soundEffectsEnabled="true"
+                android:text="Sign Up With Google"
+                android:textFontWeight="600"
+
+                />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</layout>
+
+

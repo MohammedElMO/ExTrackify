@@ -1,0 +1,36 @@
+
+i am creating a mobile app with kotlin mvvm its an expense tracker mobile  app that allow user to add what they bought and then give them weakly and daily and monthly expreses and providing shart and push notifs i decided to call  it ExTrackify and this is my color template i want u to describe all the possible screeen with elegant design like this one i have attached in order for another ai to understand it and make me a figma design for it
+| Screen              | Description                                          |
+| ------------------- | ---------------------------------------------------- |
+| **Welcome/Login**   | Google & Biometric login                             |
+| **Dashboard**       | Daily/weekly/monthly charts, total spent/income      |
+| **Add Expense**     | Amount, quantity, category, image/icon, payment type |
+| **Expense History** | Filter by date, search, list view                    |
+| **Statistics**      | Pie/bar charts using **MPAndroidChart**              |
+| **Profile**         | Change account details, logout                       |
+| **Settings**        | Notification toggle, theme                           |
+
+
+and add more if needed for other features
+
+
+| Purpose              | Library                        |
+| -------------------- | ------------------------------ |
+| Charting             | `MPAndroidChart`               |
+| Realtime + Backend   | `Appwrite SDK`                 |
+| Biometric Auth       | `BiometricPrompt` API          |
+| Google Auth          | Google OAuth via Appwrite      |
+| Notifications        | Firebase Cloud Messaging (FCM) |
+| Modern UI            | Material 3 or Jetpack Compose  |
+| Image Handling       | Glide / Coil                   |
+| Dependency Injection | Hilt (optional but clean arch) |
+
+| Section     | Option          | Type       | Description                                         |
+| ----------- | --------------- | ---------- | --------------------------------------------------- |
+| **Account** | Edit Profile    | Navigation | Leads to profile edit screen (name, avatar, email). |
+|             | Change Password | Navigation | Screen with old/new password fields and validation. |
+|             | Logout          | Button     | Logout and return to login screen.                  |
+|             | Delete Account  | Navigation | Navigate to confirmation modal with warning.        |
+
+
+
