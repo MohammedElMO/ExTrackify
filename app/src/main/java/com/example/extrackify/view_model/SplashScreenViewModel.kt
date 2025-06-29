@@ -6,14 +6,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.extrackify.models.UserRepository
+import com.example.extrackify.utils.ActiveSession
 import com.example.extrackify.utils.SessionManager
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.appwrite.exceptions.AppwriteException
-import io.appwrite.models.Session
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SplashScreenViewModel(
-    val userRepository: UserRepository,
-    val sessionManager: SessionManager
+
+@HiltViewModel
+class SplashScreenViewModel @Inject constructor(
+    val userRepository: UserRepository, val sessionManager: SessionManager
 ) : ViewModel() {
 
     private val _isLoadingSession = MutableLiveData<Boolean>(false)
@@ -22,8 +25,8 @@ class SplashScreenViewModel(
         get() = _isLoadingSession;
 
 
-    private val _session = MutableLiveData<Session?>(null)
-    val session: LiveData<Session?>
+    private val _session = MutableLiveData<ActiveSession?>(null)
+    val session: LiveData<ActiveSession?>
         get() = _session;
 
     init {
@@ -34,17 +37,29 @@ class SplashScreenViewModel(
         _isLoadingSession.value = true
         viewModelScope.launch {
             try {
-                _session.value = userRepository.getSession()
+                if (sessionManager.isSessionValid()) {
+
+                    val storedSession = sessionManager.getStoredSession()
+
+                    _session.value = ActiveSession(
+                        userId = storedSession["session_userId"] as String,
+                        sessionId = storedSession["session_id"] as String,
+                        expire = storedSession["session_expire"] as String
+                    )
+                    Log.d("stored:session", "${_session.value}")
 
 
-//                sessionManager.saveUser(
-//                    id = _session.value?.id,
-//                    email = _session.value?.email,
-//                    name = _session.value?.name
-//                )
+                } else {
+                    _session.value = userRepository.getSession()
+
+                    sessionManager.saveSession(_session.value!!)
 
 
-                Log.d("appwrite", "$session")
+                    Log.d("appwrite:session", "${_session.value}")
+                }
+
+
+
 
             } catch (e: AppwriteException) {
                 Log.d("appwrite", "${e.message}")

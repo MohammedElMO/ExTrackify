@@ -7,16 +7,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.extrackify.databinding.ActivityMainBinding
-import com.example.extrackify.factory.AuthViewModelFactory
-import com.example.extrackify.models.UserRepository
 import com.example.extrackify.utils.navigation.NavigationUtils
 import com.example.extrackify.view_model.AuthViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
 
-    private lateinit var authView: AuthViewModel;
+    private val authView: AuthViewModel by viewModels();
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,11 +31,6 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val repo = UserRepository(this)
-        val factory = AuthViewModelFactory(repo)
-
-        authView = viewModels<AuthViewModel> { factory }.value
-
 
 
 

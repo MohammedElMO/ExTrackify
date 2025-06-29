@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
+//    kotlin("kapt")
 }
 
 android {
@@ -33,15 +35,29 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "17"
+
+        jvmTarget = "1.8"
     }
+
 }
 
 dependencies {
+
+    // Hilts core
+    implementation("com.google.dagger:hilt-android:2.56.2") // Use the latest
+    kapt("com.google.dagger:hilt-compiler:2.56.2")
+
+
+    // Hilts ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.0")
+
+
+
+
 
     implementation("androidx.datastore:datastore-preferences:1.1.7")
     implementation("androidx.core:core-splashscreen:1.0.1")

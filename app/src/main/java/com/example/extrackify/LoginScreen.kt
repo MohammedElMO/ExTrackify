@@ -8,36 +8,36 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.example.extrackify.databinding.ActivityLoginBinding
-import com.example.extrackify.factory.AuthViewModelFactory
-import com.example.extrackify.models.UserRepository
 import com.example.extrackify.utils.navigation.NavigationUtils
 import com.example.extrackify.view_model.AuthViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginScreen : AppCompatActivity() {
 
-    private lateinit var authView: AuthViewModel;
+    private val authView: AuthViewModel by viewModels();
     private lateinit var binding: ActivityLoginBinding
     private var overlay: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-//            insets
-//        }
-
-        val repo = UserRepository(this)
-        val factory = AuthViewModelFactory(repo)
-        authView = viewModels<AuthViewModel> { factory }.value
-
         binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+
+
 
         binding.lifecycleOwner = this
         binding.authView = authView
-        setContentView(binding.root)
 
         authView.toastMessage.observe(this) { message ->
             message?.let {
@@ -63,10 +63,23 @@ class LoginScreen : AppCompatActivity() {
         }
 
         authView.errorMessage.observe(this) { err_messsage ->
-            Toast.makeText(this, err_messsage, Toast.LENGTH_SHORT).show()
+            err_messsage.let {
+
+                Toast.makeText(this, err_messsage, Toast.LENGTH_SHORT).show()
+            }
 
 
         }
+
+//        authView.isAuthentificated.observe(this) { isAuth ->
+//            if (isAuth) {
+//                NavigationUtils.navigateToActivity(
+//                    this@LoginScreen,
+//                    MainActivity::class.java
+//                )
+//            }
+//
+//        }
 
 
         binding.googleLoginBtn.setOnClickListener {
@@ -80,21 +93,6 @@ class LoginScreen : AppCompatActivity() {
         }
 
 
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        authView.isAuthentificated.observe(this) { authenticated ->
-            if (authenticated) {
-                NavigationUtils.navigateToActivity(this, MainActivity::class.java)
-
-
-                finish()
-            }
-
-
-        }
 
     }
 

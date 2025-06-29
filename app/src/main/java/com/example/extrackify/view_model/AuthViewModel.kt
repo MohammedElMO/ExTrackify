@@ -6,24 +6,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.extrackify.constants.AuthType
 import com.example.extrackify.models.UserRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.appwrite.exceptions.AppwriteException
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+private val MIN_PASSWORD_LENGTH = 8
 
-sealed class ValidationResult {
-    object Success : ValidationResult()
-    data class Error(val message: String) : ValidationResult()
-}
 
-//class Event<out T>(private val content: T) {
-//    private var hasBeenHandled = false
-//    fun getContentIfNotHandled(): T? = if (hasBeenHandled) null else {
-//        hasBeenHandled = true
-//        content
-//    }
-
-class AuthViewModel(private val userRepo: UserRepository) : ViewModel() {
-    private val MIN_PASSWORD_LENGTH = 8
+@HiltViewModel
+class AuthViewModel @Inject constructor(private val userRepo: UserRepository) : ViewModel() {
 
     val username = MutableLiveData("adadgag")
     val email = MutableLiveData("mohammed@gmail.com")
@@ -31,11 +24,15 @@ class AuthViewModel(private val userRepo: UserRepository) : ViewModel() {
     private val _isLoading = MutableLiveData(false)
     private val _errorMessage = MutableLiveData("")
     private val _toastMessage = MutableLiveData<String>(null)
-    private val _isAuthentificated = MutableLiveData(false)
-
+    private val _isAuthentificated = MutableLiveData<Boolean>(false)
+    private val _authType = MutableLiveData<AuthType?>()
 
     val isLoading: LiveData<Boolean>
         get() = _isLoading
+
+
+    val authType: LiveData<AuthType?>
+        get() = _authType
 
     val isAuthentificated: LiveData<Boolean>
         get() = _isAuthentificated
@@ -89,14 +86,13 @@ class AuthViewModel(private val userRepo: UserRepository) : ViewModel() {
     }
 
     fun onSignUp() {
-
         if (!validateFields()) return
         _isLoading.value = true
-
+        _authType.value = AuthType.CREDENTIAL
 
         viewModelScope.launch {
             try {
-                userRepo.createUser(
+                userRepo.signUp(
                     username = username.value.toString(),
                     email = email.value.toString(),
                     password = password.value.toString()
@@ -124,10 +120,12 @@ class AuthViewModel(private val userRepo: UserRepository) : ViewModel() {
             return
         }
         _isLoading.value = true
+        _authType.value = AuthType.CREDENTIAL
+
 
         viewModelScope.launch {
             try {
-                userRepo.loginUser(
+                userRepo.login(
                     email = email.value.toString(),
                     password = password.value.toString()
                 )
@@ -152,8 +150,11 @@ class AuthViewModel(private val userRepo: UserRepository) : ViewModel() {
 
 
     fun googleSignUp(activity: ComponentActivity) {
+
+        _authType.value = AuthType.GOOGLE
+        _isLoading.value = true
+
         viewModelScope.launch {
-            _isLoading.value = true
 
             try {
                 userRepo.googleSignUp(
@@ -187,7 +188,7 @@ class AuthViewModel(private val userRepo: UserRepository) : ViewModel() {
 
             } catch (e: AppwriteException) {
                 Log.d("appwrite:auth", "${e.message}")
-//                _isAuthentificated.value = true
+
             }
         }
     }
