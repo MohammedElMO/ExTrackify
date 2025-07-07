@@ -16,7 +16,7 @@ import javax.inject.Singleton
 
 data class ActiveSession(val expire: String, val sessionId: String, val userId: String)
 
-private val Context.dataStore by preferencesDataStore("user_session")
+private val Context.sessionStorage by preferencesDataStore("user_session")
 
 @Singleton
 class SessionManager @Inject constructor(@ApplicationContext private val context: Context) {
@@ -34,7 +34,7 @@ class SessionManager @Inject constructor(@ApplicationContext private val context
 
     suspend fun saveSession(session: ActiveSession) {
 
-        context.dataStore.edit { pref ->
+        context.sessionStorage.edit { pref ->
             pref[SESSION_EXPIRE_DATE] = session.expire
             pref[SESSION_ID] = session.sessionId
             pref[SESSION_USER_ID] = session.userId
@@ -44,7 +44,7 @@ class SessionManager @Inject constructor(@ApplicationContext private val context
 
     suspend fun getStoredSession(): Map<String, Any> {
 
-        val prefs = context.dataStore.data.first()
+        val prefs = context.sessionStorage.data.first()
         return prefs.asMap().mapKeys { it.key.name }
 
 
@@ -52,25 +52,26 @@ class SessionManager @Inject constructor(@ApplicationContext private val context
 
     suspend fun isSessionValid(): Boolean {
 
-        val prefs = context.dataStore.data.first()
+        val prefs = context.sessionStorage.data.first()
 
         val expireAt = prefs[SESSION_EXPIRE_DATE] ?: return false
 
-
-        return try {
+        Log.d("date:got", expireAt)
+        try {
             val expireTime = OffsetDateTime.parse(expireAt).toInstant()
 
             Log.d("date:parsed", "$expireTime")
 
-            Instant.now().isBefore(expireTime)
+            return Instant.now().isBefore(expireTime)
 
         } catch (e: DateTimeParseException) {
             Log.d("date:error", "${e.message}")
-            false
+            return false
         }
 
 
     }
+
 
     suspend fun clearStore() {
         context.dataStore.edit { preferences -> preferences.clear() }

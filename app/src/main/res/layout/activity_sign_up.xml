@@ -1,104 +1,210 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="authView"
             type="com.example.extrackify.view_model.AuthViewModel" />
 
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         tools:context=".SignUpScreen">
 
         <LinearLayout
+            android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:orientation="vertical">
+            android:layout_marginBottom="80dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            android:layout_marginHorizontal="5dp"
+            >
 
-            <EditText
-                android:id="@+id/username"
-                style="@style/defaultInput"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:autofillHints="name"
-                android:hint="Username"
-                android:inputType="text"
-                android:labelFor="@+id/UserName"
-                android:text="@={authView.username}" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="Sign Up"
+                android:textSize="30sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:fontFamily="@font/nunito_medium"
+                android:lineHeight="23dp"
+                android:text="Create Your Account And Get Started with Expence Tracking"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="14dp">
+
+                <include
+                    android:id="@+id/google_sing_up_btn"
+                    layout="@layout/google_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginEnd="20dp" />
+
+                <include
+                    android:id="@+id/discord_sing_up_btn"
+                    layout="@layout/google_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <include
+            android:id="@+id/line"
+            layout="@layout/divider_line"
+            app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+            app:layout_constraintTop_toTopOf="@+id/linearLayout2" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="332dp"
+
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginBottom="10dp"
+                android:text="Email Address" />
 
             <EditText
                 android:id="@+id/email"
                 style="@style/defaultInput"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
-                android:autofillHints="name"
-                android:hint="Email"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:autofillHints="emailAddress"
+                android:hint="Enter Email Address"
                 android:inputType="textEmailAddress"
                 android:labelFor="@+id/email"
                 android:text="@={authView.email}"
+                android:textColorHint="@color/md_theme_light_onSecondary"
 
                 />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginBottom="10dp"
+                android:text="Username" />
+
+            <EditText
+                android:id="@+id/username"
+                style="@style/defaultInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="username"
+                android:hint="Username"
+                android:inputType="text"
+                android:labelFor="@+id/UserName"
+                android:text="@={authView.username}"
+                android:textColorHint="@color/md_theme_light_onSecondary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="4dp"
+                android:text="Password" />
+
             <EditText
                 android:id="@+id/password"
                 style="@style/defaultInput"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:autofillHints="name"
+                android:autofillHints="password"
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:labelFor="@+id/password"
                 android:text="@={authView.password}"
+                android:textColorHint="@color/md_theme_light_onSecondary"
 
                 />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearLayout3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:layout_marginHorizontal="10dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            app:layout_constraintVertical_bias="0.0"
+            >
 
             <Button
                 android:id="@+id/signup_btn"
                 style="@style/defaultBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
                 android:background="@drawable/btn_states"
                 android:enabled="@{!authView.isLoading()}"
                 android:soundEffectsEnabled="true"
                 android:text="Sign Up"
-                android:textFontWeight="600">
+                android:textFontWeight="600" />
 
-            </Button>
+        </LinearLayout>
 
-            <Button
-                android:id="@+id/google_signup_btn"
-                style="@style/defaultBtn"
-                android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+
+            android:layout_marginTop="180dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/auth_btn_disabled"
-                android:drawableStart="@drawable/google"
-                android:drawablePadding="-8dp"
-                android:enabled="@{!authView.isLoading()}"
-                android:soundEffectsEnabled="true"
-                android:text="Sign Up With Google"
-                android:textFontWeight="600"
+                android:fontFamily="@font/nunito_regular"
+                android:text="Already Have an Account?" />
 
-                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_regular"
+                android:text=" Login"
+                android:textColor="@color/md_theme_light_secondary"
+                android:textFontWeight="800" />
         </LinearLayout>
 
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 

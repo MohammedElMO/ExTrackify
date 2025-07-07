@@ -19,10 +19,10 @@ class SplashScreenViewModel @Inject constructor(
     val userRepository: UserRepository, val sessionManager: SessionManager
 ) : ViewModel() {
 
-    private val _isLoadingSession = MutableLiveData<Boolean>(false)
+    private val _isLoadingAuthState = MutableLiveData<Boolean>(true)
 
-    val isLoadingSession: LiveData<Boolean>
-        get() = _isLoadingSession;
+    val isLoadingAuthState: LiveData<Boolean>
+        get() = _isLoadingAuthState;
 
 
     private val _session = MutableLiveData<ActiveSession?>(null)
@@ -30,11 +30,10 @@ class SplashScreenViewModel @Inject constructor(
         get() = _session;
 
     init {
-        getSession()
+        checkSession()
     }
 
-    private fun getSession() {
-        _isLoadingSession.value = true
+    private fun checkSession() {
         viewModelScope.launch {
             try {
                 if (sessionManager.isSessionValid()) {
@@ -50,23 +49,24 @@ class SplashScreenViewModel @Inject constructor(
 
 
                 } else {
+                    sessionManager.clearStore()
                     _session.value = userRepository.getSession()
 
                     sessionManager.saveSession(_session.value!!)
 
 
                     Log.d("appwrite:session", "${_session.value}")
+
                 }
 
 
-
-
             } catch (e: AppwriteException) {
-                Log.d("appwrite", "${e.message}")
-                _isLoadingSession.value = false
+                Log.d("appwrite:sessionCheck", "${e.message}")
+                _isLoadingAuthState.value = false
+
 
             } finally {
-                _isLoadingSession.value = false
+                _isLoadingAuthState.value = false
 
             }
 

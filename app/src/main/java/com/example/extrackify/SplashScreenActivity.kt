@@ -25,7 +25,7 @@ class SplashScreenActivity : AppCompatActivity() {
             insets
         }
 
-        splashViewModel.isLoadingSession.observe(this) { loaded ->
+        splashViewModel.isLoadingAuthState.observe(this) { loaded ->
             if (!loaded) {
                 val session = splashViewModel.session.value
                 if (session != null) {

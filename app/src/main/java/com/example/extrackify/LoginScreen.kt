@@ -13,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.extrackify.databinding.ActivityLoginBinding
 import com.example.extrackify.utils.navigation.NavigationUtils
 import com.example.extrackify.view_model.AuthViewModel
+import com.example.extrackify.view_model.SessionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,20 +23,18 @@ class LoginScreen : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private var overlay: View? = null
 
+    private val sessionViewModel: SessionViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-
-
         binding.lifecycleOwner = this
         binding.authView = authView
 
@@ -47,15 +46,13 @@ class LoginScreen : AppCompatActivity() {
 
         }
 
-
         authView.isLoading.observe(this) { loading ->
             val root = findViewById<ViewGroup>(android.R.id.content)
 
             if (overlay == null) {
                 overlay = LayoutInflater.from(this).inflate(R.layout.loading_overlay, root, false)
             }
-            if (loading)
-                root.addView(overlay)
+            if (loading) root.addView(overlay)
             else {
                 root.removeView(overlay)
 
@@ -71,27 +68,27 @@ class LoginScreen : AppCompatActivity() {
 
         }
 
-//        authView.isAuthentificated.observe(this) { isAuth ->
-//            if (isAuth) {
-//                NavigationUtils.navigateToActivity(
-//                    this@LoginScreen,
-//                    MainActivity::class.java
-//                )
-//            }
-//
-//        }
+        authView.isAuthenticated.observe(this) { isAuth ->
+            if (isAuth) {
+                sessionViewModel.setSession()
+
+                NavigationUtils.navigateToActivity(
+                    this@LoginScreen, MainActivity::class.java
+                )
+            }
+
+        }
+
+
 
 
         binding.googleLoginBtn.setOnClickListener {
-            authView
-                .googleSignUp(this@LoginScreen)
+            authView.googleSignUp(this@LoginScreen)
         }
 
         binding.loginBtn.setOnClickListener {
-            authView
-                .onLogin()
+            authView.onLogin()
         }
-
 
 
     }

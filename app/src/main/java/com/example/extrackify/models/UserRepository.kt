@@ -14,6 +14,8 @@ import javax.inject.Inject
 class UserRepository @Inject constructor(val appWriteService: AppWriteService) {
 
 
+    suspend fun isAuthenticated() = appWriteService.account.getSession("current")
+
     suspend fun login(email: String, password: String): Session {
         return appWriteService.account.createEmailPasswordSession(email, password)
     }
@@ -28,8 +30,8 @@ class UserRepository @Inject constructor(val appWriteService: AppWriteService) {
         )
     }
 
-    suspend fun logout(): Any {
-        return appWriteService.account.deleteSession("current")
+    suspend fun logout() {
+        appWriteService.account.deleteSession("current")
     }
 
     suspend fun getSession(): ActiveSession {

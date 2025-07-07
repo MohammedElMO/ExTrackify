@@ -8,15 +8,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.extrackify.constants.AuthType
 import com.example.extrackify.models.UserRepository
+import com.example.extrackify.utils.DataStore
+import com.example.extrackify.utils.SessionManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.appwrite.exceptions.AppwriteException
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 private val MIN_PASSWORD_LENGTH = 8
 
 
 @HiltViewModel
-class AuthViewModel @Inject constructor(private val userRepo: UserRepository) : ViewModel() {
+class AuthViewModel @Inject constructor(
+    private val userRepo: UserRepository,
+    private val sessionManager: SessionManager,
+    private val dataStore: DataStore
+) : ViewModel() {
 
     val username = MutableLiveData("adadgag")
     val email = MutableLiveData("mohammed@gmail.com")
@@ -24,7 +31,7 @@ class AuthViewModel @Inject constructor(private val userRepo: UserRepository) : 
     private val _isLoading = MutableLiveData(false)
     private val _errorMessage = MutableLiveData("")
     private val _toastMessage = MutableLiveData<String>(null)
-    private val _isAuthentificated = MutableLiveData<Boolean>(false)
+    private val _isAuthenticated = MutableLiveData<Boolean>(false)
     private val _authType = MutableLiveData<AuthType?>()
 
     val isLoading: LiveData<Boolean>
@@ -34,8 +41,8 @@ class AuthViewModel @Inject constructor(private val userRepo: UserRepository) : 
     val authType: LiveData<AuthType?>
         get() = _authType
 
-    val isAuthentificated: LiveData<Boolean>
-        get() = _isAuthentificated
+    val isAuthenticated: LiveData<Boolean>
+        get() = _isAuthenticated
 
 
     val errorMessage: LiveData<String>
@@ -43,6 +50,24 @@ class AuthViewModel @Inject constructor(private val userRepo: UserRepository) : 
 
     val toastMessage: LiveData<String>
         get() = _toastMessage
+
+    //            dataStore.getValue(DataStore.IS_AUTHENTICATED)
+//                .onEach {
+//                    _isAuthenticated.value = it
+//                    _isLoading.value = false
+//
+//                }.launchIn(this)
+    init {
+        _isLoading.value = true
+
+        viewModelScope.launch {
+            Log.d("auth:state",sessionManager.isSessionValid().toString())
+            _isAuthenticated.value = !sessionManager.isSessionValid()
+            _isLoading.value = false
+
+        }
+
+    }
 
 
     private fun checkIfValidEmail(emailText: String): Boolean =
@@ -98,13 +123,14 @@ class AuthViewModel @Inject constructor(private val userRepo: UserRepository) : 
                     password = password.value.toString()
                 )
                 _toastMessage.value = "Success"
-                _isAuthentificated.value = true
+                _isAuthenticated.value = true
+//                dataStore.saveKey(DataStore.IS_AUTHENTICATED, true)
 
             } catch (e: AppwriteException) {
                 Log.d("error appwrite", e.message.toString())
                 _errorMessage.value = e.message.toString()
-                _isLoading.value = false
-                _isAuthentificated.value = false
+                _isAuthenticated.value = false
+//                dataStore.saveKey(DataStore.IS_AUTHENTICATED, false)
 
             } finally {
                 _isLoading.value = false
@@ -130,13 +156,13 @@ class AuthViewModel @Inject constructor(private val userRepo: UserRepository) : 
                     password = password.value.toString()
                 )
                 _toastMessage.value = "Success"
-                _isAuthentificated.value = true
-
+                _isAuthenticated.value = true
+//                dataStore.saveKey(DataStore.IS_AUTHENTICATED, true)
             } catch (e: AppwriteException) {
                 Log.d("error appwrite", e.message.toString())
                 _errorMessage.value = e.message.toString()
-                _isLoading.value = false
-                _isAuthentificated.value = false
+                _isAuthenticated.value = false
+//                dataStore.saveKey(DataStore.IS_AUTHENTICATED, true)
 
 
             } finally {
@@ -161,12 +187,15 @@ class AuthViewModel @Inject constructor(private val userRepo: UserRepository) : 
                     activity = activity
                 )
                 _toastMessage.value = "Success"
-                _isAuthentificated.value = true
+                _isAuthenticated.value = true
+//                dataStore.saveKey(DataStore.IS_AUTHENTICATED, true)
+
             } catch (e: AppwriteException) {
                 Log.d("error appwrite", e.message.toString())
                 _errorMessage.value = e.message.toString()
                 _isLoading.value = false
-                _isAuthentificated.value = false
+                _isAuthenticated.value = false
+//                dataStore.saveKey(DataStore.IS_AUTHENTICATED, false)
 
             } finally {
                 _isLoading.value = false
@@ -184,9 +213,13 @@ class AuthViewModel @Inject constructor(private val userRepo: UserRepository) : 
         viewModelScope.launch {
             try {
                 userRepo.logout()
-                _isAuthentificated.value = false
+                sessionManager.clearStore()
+//                dataStore.saveKey(DataStore.IS_AUTHENTICATED, false)
 
+                _isAuthenticated.value = false
             } catch (e: AppwriteException) {
+                _isAuthenticated.value = true
+                e.printStackTrace()
                 Log.d("appwrite:auth", "${e.message}")
 
             }

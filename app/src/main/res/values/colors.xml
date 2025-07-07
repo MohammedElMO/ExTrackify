@@ -1,22 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="md_theme_light_primary">#bbd8ac</color>
-    <color name="md_theme_light_onPrimary">#2B2F45</color>
-    <color name="md_theme_light_onPrimary_400">#2B2F4533</color>
 
-    <color name="md_theme_light_secondary">#8B998E</color>
-    <color name="md_theme_light_onSecondary">#72687D</color>
+    <!-- Primary: Deep green for buttons, titles -->
+    <color name="md_theme_light_primary">#1C3B2C</color> <!-- Dark Forest Green -->
+    <color name="md_theme_light_onPrimary">#FFFFFF</color> <!-- White text on buttons -->
 
-    <color name="md_theme_light_background">#F5F5F7</color>
-    <color name="md_theme_light_onBackground">#2B2F45</color>
+    <!-- Primary Variant: Transparent/dimmed version -->
+    <color name="md_theme_light_onPrimary_400">#1C3B2C33</color>
 
-    <color name="md_theme_light_surface">#C9D3CE</color>
+    <!-- Secondary: Soft beige/sand (used in CTA buttons like "Get Started") -->
+    <color name="md_theme_light_secondary">#D9BC9C</color> <!-- Warm beige -->
+    <color name="md_theme_light_onSecondary">#2B2F45</color> <!-- Dark for contrast -->
+
+    <!-- Background: Light cream/grayish white -->
+    <color name="md_theme_light_background">#F9F9F9</color>
+    <color name="md_theme_light_onBackground">#2B2F45</color> <!-- Neutral dark text -->
+
+    <!-- Surface: light tone used for cards/inputs -->
+    <color name="md_theme_light_surface">#FFFFFF</color>
     <color name="md_theme_light_onSurface">#2B2F45</color>
+    <color name="md_theme_light_onSurface_300">#2B2F45AA</color>
 
-    <color name="md_theme_light_surfaceVariant">#C5B0BD</color>
-    <color name="md_theme_light_tertiary">#F5ECD4</color>
+    <!-- Surface variant: subtle form element borders -->
+    <color name="md_theme_light_surfaceVariant">#E6E6E6</color>
 
-    <color name="md_theme_light_outline">#7D9A6C</color>
+    <!-- Tertiary: Light sand/golden text used in emphasis -->
+    <color name="md_theme_light_tertiary">#D6B37A</color> <!-- Gold/sand -->
+
+    <!-- Outline: Muted green/gray for borders and dividers -->
+    <color name="md_theme_light_outline">#A0A5A2</color>
+
+    <!-- Error: Soft red (less harsh than pure red) -->
     <color name="md_theme_light_error">#F4CFCB</color>
 
 </resources>
