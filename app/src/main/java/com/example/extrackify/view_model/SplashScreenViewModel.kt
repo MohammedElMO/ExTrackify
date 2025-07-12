@@ -49,7 +49,6 @@ class SplashScreenViewModel @Inject constructor(
 
 
                 } else {
-                    sessionManager.clearStore()
                     _session.value = userRepository.getSession()
 
                     sessionManager.saveSession(_session.value!!)
@@ -63,6 +62,7 @@ class SplashScreenViewModel @Inject constructor(
             } catch (e: AppwriteException) {
                 Log.d("appwrite:sessionCheck", "${e.message}")
                 _isLoadingAuthState.value = false
+//                _session.value = null
 
 
             } finally {

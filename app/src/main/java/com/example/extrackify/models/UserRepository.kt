@@ -5,6 +5,7 @@ import com.example.extrackify.appwrite.AppWriteService
 import com.example.extrackify.utils.ActiveSession
 import io.appwrite.ID
 import io.appwrite.enums.OAuthProvider
+import io.appwrite.models.Execution
 import io.appwrite.models.Session
 import io.appwrite.models.User
 import kotlinx.coroutines.Dispatchers
@@ -34,6 +35,11 @@ class UserRepository @Inject constructor(val appWriteService: AppWriteService) {
         appWriteService.account.deleteSession("current")
     }
 
+    suspend fun createSession(userId: String, secret: String) {
+        appWriteService.account.createSession(userId, secret)
+    }
+
+
     suspend fun getSession(): ActiveSession {
 
         return withContext(Dispatchers.IO) {
@@ -46,16 +52,32 @@ class UserRepository @Inject constructor(val appWriteService: AppWriteService) {
 
     }
 
-    suspend fun googleSignUp(activity: ComponentActivity) {
+    suspend fun OAuth2Singup(activity: ComponentActivity, provider: OAuthProvider) {
+
         return withContext(Dispatchers.IO) {
             appWriteService.account.createOAuth2Session(
-                provider = OAuthProvider.GOOGLE,
                 activity = activity,
-            )
+                provider = provider,
+
+                )
         }
 
+    }
+
+
+    suspend fun triggerFunction(functionId: String, payload: String): Execution {
+        return withContext(Dispatchers.IO) {
+
+            appWriteService.functions.createExecution(
+                functionId = functionId,
+                body = payload
+
+            )
+        }
 
     }
 
 
 }
+
+

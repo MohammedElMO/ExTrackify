@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="authView"
-            type="com.example.extrackify.view_model.AuthViewModel" />
+            name="loginViewModel"
+            type="com.example.extrackify.view_model.LoginViewModel" />
     </data>
 
     <LinearLayout
@@ -33,7 +33,7 @@
                 android:hint="Email"
                 android:inputType="textEmailAddress"
                 android:labelFor="@+id/email"
-                android:text="@={authView.email}"
+                android:text="@={loginViewModel.email}"
 
                 />
 
@@ -47,7 +47,7 @@
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:labelFor="@+id/password"
-                android:text="@={authView.password}"
+                android:text="@={loginViewModel.password}"
 
                 />
         </LinearLayout>
@@ -66,16 +66,16 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/btn_states"
-                android:enabled="@{!authView.isLoading()}"
+                android:enabled="@{!loginViewModel.isLoading()}"
                 android:soundEffectsEnabled="true"
                 android:text="Login"
                 android:textFontWeight="600" />
 
-            <com.example.extrackify.components.Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:enabled="@{!authView.isLoading()}"
-                app:label="Login" />
+<!--            <com.example.extrackify.components.Button-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:enabled="@{!loginViewModel.isLoading()}"-->
+<!--                app:label="Login" />-->
 
             <Button
                 android:id="@+id/google_login_btn"
@@ -85,7 +85,7 @@
                 android:background="@drawable/auth_btn_disabled"
                 android:drawableStart="@drawable/google"
                 android:drawablePadding="-8dp"
-                android:enabled="@{!authView.isLoading()}"
+                android:enabled="@{!loginViewModel.isLoading()}"
                 android:soundEffectsEnabled="true"
                 android:text="Google"
                 android:textFontWeight="600"

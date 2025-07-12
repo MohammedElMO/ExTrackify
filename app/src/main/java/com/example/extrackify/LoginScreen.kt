@@ -12,14 +12,15 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.extrackify.databinding.ActivityLoginBinding
 import com.example.extrackify.utils.navigation.NavigationUtils
-import com.example.extrackify.view_model.AuthViewModel
+import com.example.extrackify.view_model.AuthUIState
+import com.example.extrackify.view_model.LoginViewModel
 import com.example.extrackify.view_model.SessionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class LoginScreen : AppCompatActivity() {
 
-    private val authView: AuthViewModel by viewModels();
+    private val loginViewModel: LoginViewModel by viewModels();
     private lateinit var binding: ActivityLoginBinding
     private var overlay: View? = null
 
@@ -36,58 +37,52 @@ class LoginScreen : AppCompatActivity() {
             insets
         }
         binding.lifecycleOwner = this
-        binding.authView = authView
+        binding.loginViewModel = loginViewModel
 
-        authView.toastMessage.observe(this) { message ->
-            message?.let {
+        val root = findViewById<ViewGroup>(android.R.id.content)
 
-                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-            }
-
+        if (overlay == null) {
+            overlay = LayoutInflater.from(this).inflate(R.layout.loading_overlay, root, false)
         }
 
-        authView.isLoading.observe(this) { loading ->
-            val root = findViewById<ViewGroup>(android.R.id.content)
+        loginViewModel.authState.observe(this) {
+            when (it) {
+                is AuthUIState.Success -> {
+                    Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+                    NavigationUtils.navigateToActivity(
+                        this@LoginScreen, MainActivity::class.java
+                    )
+                    sessionViewModel.saveSession()
+                }
 
-            if (overlay == null) {
-                overlay = LayoutInflater.from(this).inflate(R.layout.loading_overlay, root, false)
+                is AuthUIState.Error -> Toast.makeText(this, it.err, Toast.LENGTH_LONG).show()
+                AuthUIState.Loading -> {
+                    root.addView(overlay)
+                    Toast.makeText(this, "isLoading...", Toast.LENGTH_LONG)
+                        .show()
+                }
+
+                is AuthUIState.Validating -> Toast.makeText(
+                    this,
+                    it.validationMessage,
+                    Toast.LENGTH_LONG
+                ).show()
+
+                AuthUIState.Idle -> {
+                    root.removeView(overlay)
+                    return@observe
+                }
+
             }
-            if (loading) root.addView(overlay)
-            else {
-                root.removeView(overlay)
-
-            }
-        }
-
-        authView.errorMessage.observe(this) { err_messsage ->
-            err_messsage.let {
-
-                Toast.makeText(this, err_messsage, Toast.LENGTH_SHORT).show()
-            }
-
-
-        }
-
-        authView.isAuthenticated.observe(this) { isAuth ->
-            if (isAuth) {
-                sessionViewModel.setSession()
-
-                NavigationUtils.navigateToActivity(
-                    this@LoginScreen, MainActivity::class.java
-                )
-            }
-
         }
 
 
-
-
-        binding.googleLoginBtn.setOnClickListener {
-            authView.googleSignUp(this@LoginScreen)
-        }
+//        binding.googleLoginBtn.setOnClickListener {
+//            loginViewModel.googleSignUp(this@LoginScreen)
+//        }
 
         binding.loginBtn.setOnClickListener {
-            authView.onLogin()
+            loginViewModel.onLogin()
         }
 
 

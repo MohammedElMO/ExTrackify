@@ -28,10 +28,11 @@ class SplashScreenActivity : AppCompatActivity() {
         splashViewModel.isLoadingAuthState.observe(this) { loaded ->
             if (!loaded) {
                 val session = splashViewModel.session.value
+                Log.d("session:splashscreen",session.toString())
                 if (session != null) {
                     NavigationUtils.navigateToActivity(
                         this@SplashScreenActivity,
-                        MainActivity::class.java
+                        BiometricActivity::class.java
                     )
                 } else {
                     NavigationUtils.navigateToActivity(

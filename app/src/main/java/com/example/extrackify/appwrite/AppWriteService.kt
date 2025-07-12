@@ -5,6 +5,8 @@ import com.example.extrackify.constants.Config
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.appwrite.Client
 import io.appwrite.services.Account
+import io.appwrite.services.Databases
+import io.appwrite.services.Functions
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -14,6 +16,10 @@ class AppWriteService @Inject constructor(@ApplicationContext private val ctx: C
     val client: Client = Client(ctx)
 
     val account: Account = Account(client)
+
+    val db = Databases(client)
+
+    val functions = Functions(client)
 
 
     init {

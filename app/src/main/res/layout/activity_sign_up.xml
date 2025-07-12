@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="authView"
-            type="com.example.extrackify.view_model.AuthViewModel" />
+            name="signUpViewModel"
+            type="com.example.extrackify.view_model.SignUpViewModel" />
 
     </data>
 
@@ -15,19 +15,18 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
         tools:context=".SignUpScreen">
 
+        <!--  titles -->
         <LinearLayout
-            android:id="@+id/linearLayout2"
+            android:id="@+id/linearLayout6"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="80dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="10dp"
             android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
-            android:layout_marginHorizontal="5dp"
-            >
+            app:layout_constraintBottom_toTopOf="@id/singup_form"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -45,49 +44,22 @@
                 android:lineHeight="23dp"
                 android:text="Create Your Account And Get Started with Expence Tracking"
                 android:textSize="16sp" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="14dp">
-
-                <include
-                    android:id="@+id/google_sing_up_btn"
-                    layout="@layout/google_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:layout_marginEnd="20dp" />
-
-                <include
-                    android:id="@+id/discord_sing_up_btn"
-                    layout="@layout/google_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp" />
-
-            </LinearLayout>
-
-
         </LinearLayout>
 
-        <include
-            android:id="@+id/line"
-            layout="@layout/divider_line"
-            app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
-            app:layout_constraintTop_toTopOf="@+id/linearLayout2" />
-
+        <!--FORM-->
         <LinearLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/singup_form"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:layout_marginBottom="332dp"
-
+            android:layout_marginTop="20dp"
             android:orientation="vertical"
+
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:layout_editor_absoluteX="10dp">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.238">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -105,8 +77,9 @@
                 android:autofillHints="emailAddress"
                 android:hint="Enter Email Address"
                 android:inputType="textEmailAddress"
+                android:isCredential="true"
                 android:labelFor="@+id/email"
-                android:text="@={authView.email}"
+                android:text="@={signUpViewModel.email}"
                 android:textColorHint="@color/md_theme_light_onSecondary"
 
                 />
@@ -126,8 +99,9 @@
                 android:autofillHints="username"
                 android:hint="Username"
                 android:inputType="text"
+                android:isCredential="true"
                 android:labelFor="@+id/UserName"
-                android:text="@={authView.username}"
+                android:text="@={signUpViewModel.username}"
                 android:textColorHint="@color/md_theme_light_onSecondary" />
 
             <TextView
@@ -147,47 +121,143 @@
                 android:autofillHints="password"
                 android:hint="Password"
                 android:inputType="textPassword"
+                android:isCredential="true"
                 android:labelFor="@+id/password"
-                android:text="@={authView.password}"
+                android:text="@={signUpViewModel.password}"
                 android:textColorHint="@color/md_theme_light_onSecondary"
 
                 />
-        </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/linearLayout3"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginHorizontal="10dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            app:layout_constraintVertical_bias="0.0"
-            >
-
-            <Button
-                android:id="@+id/signup_btn"
-                style="@style/defaultBtn"
+            <LinearLayout
+                android:id="@+id/linearLayout3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/btn_states"
-                android:enabled="@{!authView.isLoading()}"
-                android:soundEffectsEnabled="true"
-                android:text="Sign Up"
-                android:textFontWeight="600" />
+                android:layout_marginVertical="17dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
+                <Button
+                    android:id="@+id/signup_btn"
+                    style="@style/defaultBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_states"
+                    android:enabled="@{!signUpViewModel.isLoading()}"
+                    android:soundEffectsEnabled="true"
+                    android:text="Sign Up"
+                    android:textFontWeight="600" />
+
+            </LinearLayout>
         </LinearLayout>
 
+        <!-- Line-->
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
-
-            android:layout_marginTop="180dp"
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/oauth_btns"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-            >
+            app:layout_constraintTop_toBottomOf="@+id/singup_form"
+            app:layout_constraintVertical_bias="0.0">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="#D3D3D3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_semibold"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:text="Or Authorize With"
+                android:textColor="#999999"
+                android:textFontWeight="800"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="#D3D3D3" />
+        </LinearLayout>
+
+        <!--OAuthBtns-->
+        <LinearLayout
+            android:id="@+id/oauth_btns"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:padding="10dp"
+            app:layout_constraintBottom_toTopOf="@id/link"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/singup_form"
+            app:layout_constraintVertical_bias="0.45">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <include
+                    android:id="@+id/google_sing_up_btn"
+                    layout="@layout/google_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp" />
+
+                <include
+                    android:id="@+id/discord_sing_up_btn"
+                    layout="@layout/discord_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginVertical="10dp"
+                android:gravity="center">
+
+                <include
+                    android:id="@+id/github_sing_up_btn"
+                    layout="@layout/github_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--Link-->
+        <LinearLayout
+            android:id="@+id/link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/oauth_btns"
+            app:layout_constraintVertical_bias="0.3">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -199,7 +269,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_regular"
-                android:text=" Login"
+                android:text="Login"
                 android:textColor="@color/md_theme_light_secondary"
                 android:textFontWeight="800" />
         </LinearLayout>

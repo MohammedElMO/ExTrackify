@@ -13,6 +13,14 @@ import io.appwrite.exceptions.AppwriteException
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
+sealed class SessionStateFlow() {
+    object Loading : SessionStateFlow()
+    data class Error(val err: String) : SessionStateFlow()
+    data class Success(val message: String) : SessionStateFlow()
+    object Idle : SessionStateFlow()
+}
+
 @HiltViewModel
 class SessionViewModel @Inject constructor(
     val userRepository: UserRepository,
@@ -20,37 +28,38 @@ class SessionViewModel @Inject constructor(
 
 ) : ViewModel() {
 
-    private val _isLoadingAuthState = MutableLiveData<Boolean>(false)
+    private val _sessionState = MutableLiveData<SessionStateFlow>()
 
-    val isLoadingAuthState: LiveData<Boolean>
-        get() = _isLoadingAuthState;
+    val sessionState: LiveData<SessionStateFlow>
+        get() = _sessionState;
 
 
     private val _session = MutableLiveData<ActiveSession?>(null)
-    val session: LiveData<ActiveSession?>
-        get() = _session;
 
 
-    fun setSession() {
-        _isLoadingAuthState.value = true
+    fun saveSession() {
+        _sessionState.value = SessionStateFlow.Loading
+
         viewModelScope.launch {
             try {
-                sessionManager.clearStore()
                 _session.value = userRepository.getSession()
 
                 sessionManager.saveSession(_session.value!!)
 
                 Log.d("appwrite:session", "${_session.value}")
 
+                _sessionState.value = SessionStateFlow.Success("session Loaded")
 
             } catch (e: AppwriteException) {
+                _sessionState.value = SessionStateFlow.Success("$e.message")
+
                 Log.d("appwrite", "${e.message}")
 
             } finally {
-                _isLoadingAuthState.value = false
+                _sessionState.value = SessionStateFlow.Idle
+
 
             }
-
 
         }
 

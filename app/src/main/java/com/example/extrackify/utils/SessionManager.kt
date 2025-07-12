@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import java.time.Instant
 import java.time.OffsetDateTime
 import java.time.format.DateTimeParseException
@@ -54,7 +55,9 @@ class SessionManager @Inject constructor(@ApplicationContext private val context
 
         val prefs = context.sessionStorage.data.first()
 
-        val expireAt = prefs[SESSION_EXPIRE_DATE] ?: return false
+        val expireAt = prefs[SESSION_EXPIRE_DATE]
+
+        if (expireAt == null) return false
 
         Log.d("date:got", expireAt)
         try {
@@ -74,7 +77,11 @@ class SessionManager @Inject constructor(@ApplicationContext private val context
 
 
     suspend fun clearStore() {
-        context.dataStore.edit { preferences -> preferences.clear() }
+
+            context.sessionStorage.edit { preferences -> preferences.clear()
+            Log.d("store:log","store cleared all")}
+
+
     }
 
 

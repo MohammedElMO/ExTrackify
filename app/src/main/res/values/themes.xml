@@ -1,13 +1,6 @@
 <resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.ExTrackify" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-
-        <!--        <item name="android:windowFullscreen" >true</item>-->
-        <item name="windowSplashScreenIconBackgroundColor">@color/md_theme_light_onPrimary</item>
-
-        <!--        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>-->
-
 
         <item name="colorPrimary">@color/md_theme_light_primary</item>
         <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
