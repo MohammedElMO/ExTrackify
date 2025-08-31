@@ -71,27 +71,64 @@
                 android:text="Login"
                 android:textFontWeight="600" />
 
-<!--            <com.example.extrackify.components.Button-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:enabled="@{!loginViewModel.isLoading()}"-->
-<!--                app:label="Login" />-->
 
-            <Button
-                android:id="@+id/google_login_btn"
-                style="@style/defaultBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/auth_btn_disabled"
-                android:drawableStart="@drawable/google"
-                android:drawablePadding="-8dp"
-                android:enabled="@{!loginViewModel.isLoading()}"
-                android:soundEffectsEnabled="true"
-                android:text="Google"
-                android:textFontWeight="600"
-
-                />
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/oauth_btns"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:padding="10dp"
+            app:layout_constraintBottom_toTopOf="@id/link"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/singup_form"
+            app:layout_constraintVertical_bias="0.45">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <include
+                    android:id="@+id/google_login_btn"
+                    layout="@layout/google_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp" />
+
+                <include
+                    android:id="@+id/discord_login_btn"
+                    layout="@layout/discord_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginVertical="10dp"
+                android:gravity="center">
+
+                <include
+                    android:id="@+id/github_login_btn"
+                    layout="@layout/github_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp" />
+            </LinearLayout>
+        </LinearLayout>
+
 
 
     </LinearLayout>

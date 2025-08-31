@@ -28,4 +28,12 @@
         android:background="@drawable/btn_states"
         android:text="logout"
         android:textFontWeight="600" />
+
+
+    <Button
+        android:id="@+id/verify_account"
+        style="@style/defaultBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="verify your Account" />
 </LinearLayout>

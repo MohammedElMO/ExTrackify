@@ -12,7 +12,7 @@ import com.google.android.material.snackbar.Snackbar.SnackbarLayout
 class SnackBarHelper(private val context: Context) {
 
     @SuppressLint("RestrictedApi")
-    fun makeSnackBar(message: String, view: View, iconRes: Int) {
+    fun makeSnackBar(message: String, view: View, iconRes: Int?) {
         val snack = Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
         val layout = snack.view as SnackbarLayout
         layout.setPadding(0, 0, 0, 0)

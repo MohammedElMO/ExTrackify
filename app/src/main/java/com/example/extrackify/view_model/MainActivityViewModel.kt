@@ -35,4 +35,17 @@ class MainActivityViewModel @Inject constructor(
 
     }
 
+    fun verifyAccount() {
+        viewModelScope.launch {
+            try {
+                userRepo.verifyEmail()
+
+                Log.d("appwrite:verification","sucess")
+            }catch (e: AppwriteException) {
+                Log.e("appwrite:verification" ,"${e.message}")
+            }
+
+        }
+
+    }
 }

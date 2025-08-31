@@ -72,6 +72,22 @@ dependencies {
 
     // biometrics
     implementation("androidx.biometric:biometric:1.1.0")
+    
+    // Navigation Component
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
+    
+    // Material Design Components
+    implementation("com.google.android.material:material:1.11.0")
+    
+    // MPAndroidChart for graphs
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    
+    // Calendar view for date selection
+    implementation("com.kizitonwose.calendar:view:2.5.0")
+    
+    // Lottie for animations
+    implementation("com.airbnb.android:lottie:6.2.0")
 
 
     implementation(libs.androidx.core.ktx)

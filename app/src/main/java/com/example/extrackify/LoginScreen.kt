@@ -1,5 +1,6 @@
 package com.example.extrackify
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -26,11 +28,13 @@ class LoginScreen : AppCompatActivity() {
 
     private val sessionViewModel: SessionViewModel by viewModels()
 
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -77,14 +81,24 @@ class LoginScreen : AppCompatActivity() {
         }
 
 
-//        binding.googleLoginBtn.setOnClickListener {
-//            loginViewModel.googleSignUp(this@LoginScreen)
-//        }
 
         binding.loginBtn.setOnClickListener {
             loginViewModel.onLogin()
         }
 
+        binding.googleLoginBtn.root.setOnClickListener {
+            loginViewModel.googleSingUp(this@LoginScreen)
+        }
+
+        binding.githubLoginBtn.root.setOnClickListener {
+            loginViewModel.githubSingUp(this@LoginScreen)
+
+        }
+
+        binding.discordLoginBtn.root.setOnClickListener {
+            loginViewModel.discordSingUp(this@LoginScreen)
+
+        }
 
     }
 

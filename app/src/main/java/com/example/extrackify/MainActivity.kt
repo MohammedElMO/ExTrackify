@@ -20,48 +20,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-//
-//        authView.isLoading.observe(this) { isLoading ->
-//            if (!isLoading) {
-//                val isAuth = authView.isAuthenticated.value
-//                Log.d("auth:state", "$isAuth")
-////                isAuth?.let {
-////                    if (!it) {
-////                        NavigationUtils.navigateToActivity(
-////                            this@MainActivity,
-////                            WelcomeScreen::class.java
-////                        )
-////
-////                    }
-////                }
-//            }
-//        }
-
-
-        binding.logout.setOnClickListener {
-
-
-            mainViewModel.logout()
-
-            NavigationUtils.navigateToActivity(
-                this@MainActivity,
-                WelcomeScreen::class.java
-            )
-
-        }
+        
+        // Navigate to Dashboard
+        NavigationUtils.navigateToActivity(this, DashboardActivity::class.java)
+        finish()
 
 
     }
 
+
 }
+

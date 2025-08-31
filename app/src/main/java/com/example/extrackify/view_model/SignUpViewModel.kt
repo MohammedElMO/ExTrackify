@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.extrackify.constants.AuthType
 import com.example.extrackify.models.UserRepository
 import com.example.extrackify.utils.SessionManager
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,10 +13,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-enum class AuthType {
-    CREDENTIAL,
-    OAUTH
-}
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
@@ -85,7 +82,6 @@ class SignUpViewModel @Inject constructor(
 
     fun onSignUp() {
         if (!validateFields()) return
-
         _authState.value = AuthUIState.Loading
         _authType.value = AuthType.CREDENTIAL
 
@@ -98,7 +94,7 @@ class SignUpViewModel @Inject constructor(
                 )
                 _authState.value = AuthUIState.Success("Success")
 
-
+                userRepo.verifyEmail()
             } catch (e: AppwriteException) {
                 Log.d("error appwrite", e.message.toString())
 

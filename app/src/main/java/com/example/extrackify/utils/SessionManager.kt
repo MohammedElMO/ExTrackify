@@ -25,12 +25,9 @@ class SessionManager @Inject constructor(@ApplicationContext private val context
 
     companion object {
 
-
         val SESSION_ID = stringPreferencesKey("session_id")
         val SESSION_EXPIRE_DATE = stringPreferencesKey("session_expire")
         val SESSION_USER_ID = stringPreferencesKey("session_userId")
-
-
     }
 
     suspend fun saveSession(session: ActiveSession) {
@@ -41,6 +38,11 @@ class SessionManager @Inject constructor(@ApplicationContext private val context
             pref[SESSION_USER_ID] = session.userId
         }
 
+    }
+    suspend fun getUserId(): String? {
+        val prefs = context.sessionStorage.data.first()
+
+        return prefs[SESSION_USER_ID]
     }
 
     suspend fun getStoredSession(): Map<String, Any> {

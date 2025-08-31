@@ -12,7 +12,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
+import com.example.extrackify.constants.AuthType
 import com.example.extrackify.models.UserRepository
+import com.google.android.gms.auth.api.Auth
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -38,7 +40,7 @@ open class BaseAuthViewModel @Inject constructor(val userRepository: UserReposit
     val _password = MutableLiveData("mohammed123")
     val _authState = MutableLiveData<AuthUIState>(AuthUIState.Idle)
 
-    val _authType = MutableLiveData<AuthType>()
+    val _authType: MutableLiveData<AuthType> = MutableLiveData<AuthType>()
 
     val isLoading = _authState.map { it is AuthUIState.Loading }
 

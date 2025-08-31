@@ -12,10 +12,10 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.extrackify.constants.AuthType
 import com.example.extrackify.databinding.ActivitySignUpBinding
 import com.example.extrackify.utils.SessionManager
 import com.example.extrackify.utils.navigation.NavigationUtils
-import com.example.extrackify.view_model.AuthType
 import com.example.extrackify.view_model.AuthUIState
 import com.example.extrackify.view_model.SessionViewModel
 import com.example.extrackify.view_model.SignUpViewModel

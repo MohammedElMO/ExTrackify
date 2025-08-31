@@ -26,6 +26,20 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".VerificationSuccessActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="email-verified"
+                    android:scheme="extrackify" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".GetStartedActivity"
             android:exported="false" />
         <activity
@@ -51,7 +65,19 @@
             android:exported="true" />
         <activity
             android:name=".MainActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
+        <activity
+            android:name=".DashboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddExpenseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ExpenseListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ExpenseDetailActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

@@ -7,6 +7,7 @@ import io.appwrite.ID
 import io.appwrite.enums.OAuthProvider
 import io.appwrite.models.Execution
 import io.appwrite.models.Session
+import io.appwrite.models.Token
 import io.appwrite.models.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -18,25 +19,42 @@ class UserRepository @Inject constructor(val appWriteService: AppWriteService) {
     suspend fun isAuthenticated() = appWriteService.account.getSession("current")
 
     suspend fun login(email: String, password: String): Session {
-        return appWriteService.account.createEmailPasswordSession(email, password)
+        return withContext(Dispatchers.IO) {
+            appWriteService.account.createEmailPasswordSession(email, password)
+
+        }
     }
 
     suspend fun signUp(username: String, email: String, password: String): User<Map<String, Any>> {
+        return withContext(Dispatchers.IO) {
+            appWriteService.account.create(
+                name = username,
+                userId = ID.unique(),
+                email = email,
+                password = password
+            )
+        }
 
-        return appWriteService.account.create(
-            name = username,
-            userId = ID.unique(),
-            email = email,
-            password = password
-        )
     }
 
     suspend fun logout() {
-        appWriteService.account.deleteSession("current")
+        withContext(Dispatchers.IO) {
+
+            appWriteService.account.deleteSession("current")
+        }
     }
 
     suspend fun createSession(userId: String, secret: String) {
-        appWriteService.account.createSession(userId, secret)
+        withContext(Dispatchers.IO) {
+
+            appWriteService.account.createSession(userId, secret)
+        }
+
+    }
+
+
+    suspend fun verifyEmail(): Token {
+        return appWriteService.account.createVerification("https://extrackify.software/email-verified")
     }
 
 
