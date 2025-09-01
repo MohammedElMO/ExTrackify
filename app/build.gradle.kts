@@ -68,7 +68,7 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.1")
 
     // appwrite
-    implementation("io.appwrite:sdk-for-android:8.1.0")
+    implementation("io.appwrite:sdk-for-android:8.2.0")
 
     // biometrics
     implementation("androidx.biometric:biometric:1.1.0")
@@ -89,6 +89,23 @@ dependencies {
     // Lottie for animations
     implementation("com.airbnb.android:lottie:6.2.0")
 
+    // Additional dependencies for enhanced functionality
+    implementation("androidx.fragment:fragment-ktx:1.8.5")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation("androidx.cardview:cardview:1.0.0")
+    implementation("com.google.android.flexbox:flexbox:3.0.0")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    
+    // Image loading
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    kapt("com.github.bumptech.glide:compiler:4.16.0")
+    
+    // Date picker
+    implementation("com.google.android.material:material:1.12.0")
+    
+    // ViewPager2 for dashboard tabs
+    implementation("androidx.viewpager2:viewpager2:1.1.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

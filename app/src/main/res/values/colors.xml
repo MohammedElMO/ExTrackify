@@ -33,4 +33,23 @@
     <!-- Error: Soft red (less harsh than pure red) -->
     <color name="md_theme_light_error">#F4CFCB</color>
 
+    <!-- Additional colors for expense categories -->
+    <color name="category_food">#FF6B6B</color>
+    <color name="category_transport">#4ECDC4</color>
+    <color name="category_entertainment">#45B7D1</color>
+    <color name="category_shopping">#96CEB4</color>
+    <color name="category_bills">#FFEAA7</color>
+    <color name="category_health">#DDA0DD</color>
+    <color name="category_education">#98D8C8</color>
+    <color name="category_other">#F7DC6F</color>
+    
+    <!-- Status colors -->
+    <color name="success_green">#27AE60</color>
+    <color name="warning_orange">#F39C12</color>
+    <color name="info_blue">#3498DB</color>
+    
+    <!-- Chart colors -->
+    <color name="chart_primary">#1C3B2C</color>
+    <color name="chart_secondary">#D9BC9C</color>
+    <color name="chart_accent">#A0A5A2</color>
 </resources>
